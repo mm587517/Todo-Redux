@@ -1,68 +1,36 @@
 import React from 'react';
-import { useSelector, useDispatch } from 'react-redux';
-import {
-  increment,
-  decrement,
-  addTodo,
-  removeTodo,
-  toggleTodo,
-} from './actions';
-import Checkbox from '@material-ui/core/Checkbox';
-import TextField from '@material-ui/core/TextField';
+import { useSelector } from 'react-redux';
+import './App.css';
+import { NewTodo } from './components/newTodo';
+import { Todo } from './components/Todo';
+import { RemoveTodo } from './components/RemoveTodo';
+import Grid from '@material-ui/core/Grid';
 import Button from '@material-ui/core/Button';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import Text from 'react';
 
 function App() {
-  const counter = useSelector((state) => state.counter);
   const todos = useSelector((state) => state.todos);
-  const dispatch = useDispatch();
-
-  let input;
 
   return (
     <div className='App'>
-      {todos.map((todo) => (
-        <div>
-          <FormControlLabel
-            control={
-              <Checkbox
-                value='checkedA'
-                inputProps={{ 'aria-label': 'Checkbox A' }}
-                onChange={(e) => {
-                  dispatch(toggleTodo(todo));
-                }}
-              />
-            }
-            label={todo.job}
-          />
-          <br></br>
-        </div>
-      ))}
-
-      <form
-        onSubmit={(e) => {
-          e.preventDefault();
-          if (!input.value.trim()) {
-            return;
-          }
-          dispatch(increment(1));
-          dispatch(addTodo(input.value));
-          input.value = '';
-        }}
+      <Grid
+        container
+        direction='column'
+        justify='flex-start'
+        alignItems='center'
       >
-        <TextField
-          inputRef={(node) => (input = node)}
-          id='standard-basic'
-          label='Standard'
-        />
-
-        <Button type='submit' variant='contained'>
-          Add Todo
-        </Button>
-      </form>
+        <Grid item>
+          <NewTodo />
+        </Grid>
+        <Grid item>
+          {todos.map((todo) => (
+            <Todo todo={todo} />
+          ))}
+        </Grid>
+        <Grid item>
+          <RemoveTodo>Clear Completed Tasks</RemoveTodo>
+        </Grid>
+      </Grid>
     </div>
   );
 }
-
 export default App;

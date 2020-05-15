@@ -3,18 +3,15 @@ const todoReducer = (state = [], action) => {
     case 'ADD':
       return [...state, { job: action.payload, status: false, id: action.id }];
     case 'REMOVE':
-      const index = state.indexOf(action.payload);
-      if (index > -1) {
-        state.splice(index, 1);
-      }
-      return state;
-    case 'COMPLETE':
-      state = state.forEach((e) => {
-        if (e.job === action.payload) {
-          e.status = !e.status;
-        }
+      return state.filter((value, index, arr) => {
+        return value.status === false;
       });
-      return state;
+
+    case 'COMPLETE':
+      return state.map((el) =>
+        el.id === action.id ? { ...el, status: !el.status } : el,
+      );
+
     default:
       return state;
   }
