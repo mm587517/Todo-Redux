@@ -1,3 +1,4 @@
+let globalId = 0;
 export const increment = (num) => {
   return {
     type: 'INCREMENT',
@@ -15,6 +16,7 @@ export const addTodo = (todo) => {
   return {
     type: 'ADD',
     payload: todo,
+    id: globalId++,
   };
 };
 
@@ -25,8 +27,9 @@ export const removeTodo = (todo) => {
   };
 };
 
-export const toggleTodo = () => {
+export const toggleTodo = (todo) => {
   return {
     type: 'COMPLETE',
+    payload: todo,
   };
 };

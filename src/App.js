@@ -1,6 +1,12 @@
 import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { increment, decrement, addTodo, removeTodo } from './actions';
+import {
+  increment,
+  decrement,
+  addTodo,
+  removeTodo,
+  toggleTodo,
+} from './actions';
 import Checkbox from '@material-ui/core/Checkbox';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
@@ -10,7 +16,6 @@ import Text from 'react';
 function App() {
   const counter = useSelector((state) => state.counter);
   const todos = useSelector((state) => state.todos);
-  const isComplete = useSelector((state) => state.isComplete);
   const dispatch = useDispatch();
 
   let input;
@@ -25,7 +30,7 @@ function App() {
                 value='checkedA'
                 inputProps={{ 'aria-label': 'Checkbox A' }}
                 onChange={(e) => {
-                  dispatch();
+                  dispatch(toggleTodo(todo));
                 }}
               />
             }
